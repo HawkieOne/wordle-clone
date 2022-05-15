@@ -3,7 +3,7 @@ import { MenuIcon, QuestionMarkCircleIcon, ChartBarIcon, CogIcon } from '@heroic
 
 export default function Header() {
   return (
-    <div className="flex justify-between items-center p-2">
+    <div className="flex justify-between items-center p-2 text-white">
         <div className="flex"> 
             <MenuIcon className="w-10 h-10 cursor-pointer"/>
             <QuestionMarkCircleIcon className="w810 h-10 cursor-pointer"/>
