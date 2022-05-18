@@ -1,33 +1,16 @@
-import React, { useEffect, useState } from "react";
-import Hotkeys from "react-hot-keys";
-import { toast, ToastContainer } from "react-toastify";
+import React from "react";
 import "react-toastify/dist/ReactToastify.css";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 
-import {
-  letterIndex,
-  currentLetter,
-  wordIndex,
-  gussedLetters,
-  colorLetters,
-  currentBgColor,
-  letters,
-  lettersLeft,
-} from "../atoms/atoms";
+import { gussedLetters, lettersLeft } from "../atoms/atoms";
 import { wordsApi } from "../api/wordsApi";
-import {
-  createLetterArr,
-  joinLettersToWord,
-  onBackspace,
-  onLetterPress,
-} from "../shared/common";
+import { createLetterArr } from "../shared/common";
 import { lettersList } from "../shared/data";
 import Header from "./Header";
 import Keyboard from "./Keyboard";
 import GameArea from "./GameArea";
 import { useOnKeyDown } from "../shared/hooks";
-
-const correctWord = "HELLO";
+import { ToastContainer } from "react-toastify";
 
 export default function Game() {
   const [lettersLeft2, setLettersLeft] = useRecoilState(lettersLeft);

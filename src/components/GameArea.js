@@ -1,29 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Hotkeys from "react-hot-keys";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import axios from "axios";
 
-import {
-  letterIndex,
-  currentLetter,
-  wordIndex,
-  gussedLetters,
-  colorLetters,
-  currentBgColor,
-} from "../atoms/atoms";
+import { gussedLetters, colorLetters } from "../atoms/atoms";
 import Word from "./Word";
-import { wordsApi } from "../api/wordsApi";
-import { joinLettersToWord } from "../shared/common";
 import { lettersList } from "../shared/data";
 
 export default function GameArea({ onKeyDown }) {
-
-
   const [lettersToReg, setLetterToReg] = useState(lettersList);
-  const setLetter = useSetRecoilState(currentLetter);
   const [lettersArray, setLettersArray] = useRecoilState(gussedLetters);
-  const [colorsArray, setColorsArray] = useRecoilState(colorLetters);
-  const setCurrentBgColor = useSetRecoilState(currentBgColor);
 
   const getRandomWord = () => {
     const options = {
@@ -51,30 +37,17 @@ export default function GameArea({ onKeyDown }) {
       });
   };
 
-  const onKeyUp = (e) => {
-    // console.log("Key up");
-  };
-
-  useEffect(() => {
-    // console.log(lettersArray);
-  }, [lettersArray]);
-
-  useEffect(() => {
-    // console.log("COLORS: ", colorsArray);
-  }, [colorsArray]);
-
   return (
     <Hotkeys
       keyName={lettersToReg}
       onKeyDown={(e) => onKeyDown(e)}
-      onKeyUp={onKeyUp}
+      // onKeyUp={onKeyUp}
     >
       <div className="h-full flex flex-col justify-center items-center basis-3/4 border-y border-y-slate-900">
         {lettersArray.map((word, i) => (
           <Word key={i} wordIndex={i} word={word} />
         ))}
       </div>
-
     </Hotkeys>
   );
 }

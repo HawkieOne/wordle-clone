@@ -19,7 +19,6 @@ export const wordIndex = selector({
     return index;
   },
   set: ({ set }, action) => {
-    // var index = currentWordIndex >= 3 ? 3 : currentWordIndex;
     set(currentWordIndex, (state) => reducer(state, action));
   },
 });
