@@ -1,5 +1,6 @@
 import { atom, selector } from "recoil";
-import { createArray, modifyArray, reducer } from "../shared/common";
+import { createArray, createLetterArr, modifyArray, reducer } from "../shared/common";
+import { lettersList } from "../shared/data";
 
 export const currentLetter = atom({
   key: "currentLetter",
@@ -73,7 +74,7 @@ export const colorLetters = selector({
     return get(letters);
   },
   set: ({ get, set }, index) => {
-    console.log(get(currentBgColor));
+    // console.log(get(currentBgColor));
     set(letters, (state) =>
       modifyArray(
         state,
@@ -85,4 +86,9 @@ export const colorLetters = selector({
       )
     );
   },
+});
+
+export const lettersLeft = atom({
+  key: "lettersLeft",
+  default: createLetterArr(lettersList),
 });
