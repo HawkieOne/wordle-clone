@@ -3,6 +3,6 @@ export const lettersList =
 
 export const GREEN = 'bg-emerald-700';
 export const YELLOW = 'bg-amber-400';
-export const DARKGREY = 'bg-emerald-700';
-export const LIGHTGREY = 'bg-slate-700';
+export const DARKGREY = 'bg-slate-700';
+export const LIGHTGREY = 'bg-slate-500';
 
