@@ -1,6 +1,14 @@
-import { GREEN, lettersList, LIGHTGREY, YELLOW } from "./data";
-import React, { useState } from 'react';
+import { LIGHTGREY } from "./data";
 
+// * Creates the initial array for rendering the game area 
+const createMatrix = () => {
+  const matrix = new Array(5)
+    .fill(0)
+    .map(() => new Array(5).fill({ letter: "", color: LIGHTGREY }));
+  return matrix;
+};
+
+// * Use this function to change the index of the words or the letters
 const reducer = (value, action) => {
   switch (action) {
     case "increase":
@@ -19,17 +27,20 @@ const reducer = (value, action) => {
   return value;
 };
 
-const modifyArray = (arr, y, x, value, action, color = "slate") => {
+// * Use this to change the values of the matrix
+// ! Can also be used to change the color of the matrix (Used for showing letter status) 
+const modifyMatrix = (arr, y, x, action) => {
   if (x === 5) {
     x = 4;
   }
+  console.log(action);
   var newArr = arr;
-  switch (action) {
+  switch (action.action) {
     case "add":
       if (arr[y][x].letter === "") {
         var word = [...arr[y]];
         var obj = { ...word[x] };
-        obj.letter = value;
+        obj.letter = action.value;
         word = replaceItemAtIndex([...word], x, obj);
         newArr = replaceItemAtIndex([...arr], y, word);
       }
@@ -43,13 +54,14 @@ const modifyArray = (arr, y, x, value, action, color = "slate") => {
       break;
     case "color":
       word = [...arr[y]];
-      obj = { ...word[x] };
-      obj.color = color;
-      word = deleteItemAtIndex([...word], x, obj);
-      newArr = deleteItemAtIndex([...arr], y, word);
+      obj = { ...word[action.index] };
+      obj.color = action.value;
+      console.log(obj);
+      word = replaceItemAtIndex([...word], action.index, obj);
+      newArr = replaceItemAtIndex([...arr], y, word);
       break;
     case "new":
-      newArr = createArray();
+      newArr = createMatrix();
       break;
     default:
       newArr = arr;
@@ -59,6 +71,7 @@ const modifyArray = (arr, y, x, value, action, color = "slate") => {
   return newArr;
 };
 
+// * Limits a value between 0 and 5 to avoid index out of bounds for the matrix
 const limitValue = (val) => {
   return val >= 5 ? 5 : val <= 0 ? 0 : val;
 };
@@ -71,14 +84,6 @@ const deleteItemAtIndex = (arr, index, newValue) => {
   return [...arr.slice(0, index), newValue, ...arr.slice(index + 1)];
 };
 
-const createArray = () => {
-  const matrix = new Array(5)
-    .fill(0)
-    .map(() => new Array(5).fill({ letter: "", color: "bg-slate-500" }));
-  // console.log(matrix);
-  return matrix;
-};
-
 const joinLettersToWord = (letters) => {
   var word = "";
   for (var i = 0; i < letters.length; i++) {
@@ -87,101 +92,22 @@ const joinLettersToWord = (letters) => {
   return word;
 };
 
+const createArrayABC = (arr) => {
+  return arr.split(",").map((item) => {
+    return {
+      letter: item,
+      color: LIGHTGREY,
+    };
+  });
+};
+
 export {
-  createArray,
+  createMatrix,
   reducer,
-  modifyArray,
+  modifyMatrix,
   limitValue,
   replaceItemAtIndex,
   deleteItemAtIndex,
   joinLettersToWord,
-};
-
-export const onBackspace = (func1, func2) => {
-  func1("decrease");
-  func2("delete");
-};
-
-export const onLetterPress = (
-  correctWord,
-  lettersArray,
-  activeWordIndex,
-  setCurrentBgColor,
-  setColorsArray,
-  toast,
-  setActiveWordIndex,
-  setActiveLetterIndex,
-  lettersLeft,
-  setLettersLeft
-) => {
-  var correctLetterCount = 0;
-  let lettersLeftCpy = lettersLeft.slice();
-  for (var i = 0; i < correctWord.length; i++) {
-    const letter = lettersArray[activeWordIndex][i].letter;
-    const correctLetter = correctWord[i];
-    if (letter === correctLetter) {
-      setCurrentBgColor(GREEN);
-      lettersLeftCpy = colorLetter(letter, "correct", lettersLeftCpy);
-      setColorsArray(i);
-      correctLetterCount++;      
-    } else if (correctWord.indexOf(letter) > -1) {
-      lettersLeftCpy = colorLetter(letter, "wrongPos", lettersLeftCpy);
-      setCurrentBgColor(YELLOW);
-      setColorsArray(i);
-    } else {
-      lettersLeftCpy = colorLetter(letter, "wrong", lettersLeftCpy);
-      setCurrentBgColor(LIGHTGREY);
-      setColorsArray(i);
-    }
-    console.log(lettersLeftCpy);
-  }
-  setActiveWordIndex("increase");
-  setActiveLetterIndex("zero");
-  setLettersLeft(lettersLeftCpy);
-  if (correctLetterCount === 5) {
-    toast("Correct guess\nPress here to play again", {
-      autoClose: false,
-    });
-    setActiveWordIndex("zero");
-    setActiveLetterIndex("zero");
-    return;
-    // setLetterToReg("");
-  }
-};
-
-const colorLetter = (letter, action, arr) => {
-  let lettersLeftCpy = arr.map((item, index) => {
-    var newItem = item;
-    if (item.letter === letter) {
-      if (action === "correct") {
-        newItem = {
-          letter: item.letter,
-          color: "bg-emerald-700",
-        };
-      } else if (action === "wrongPos") {
-        if (item.color !== "bg-green-500") {
-          newItem = {
-            letter: item.letter,
-            color: "bg-amber-400",
-          };
-        }
-      } else if (action === "wrong") {
-        newItem = {
-          letter: item.letter,
-          color: "bg-slate-700",
-        };
-      }
-    }
-    return newItem;
-  });
-  return lettersLeftCpy;
-};
-
-export const createLetterArr = (arr) => {
-  return arr.split(",").map((item, index) => {
-    return ({
-      letter: item,
-      color: 'bg-slate-500'
-    })
-  });
+  createArrayABC,
 };
