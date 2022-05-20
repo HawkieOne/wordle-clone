@@ -3,13 +3,12 @@ import Hotkeys from "react-hot-keys";
 import { useRecoilState } from "recoil";
 import axios from "axios";
 
-import { gussedLetters, colorLetters } from "../atoms/atoms";
+import { modifyWordleMatrix } from "../atoms/atoms";
 import Word from "./Word";
 import { lettersList } from "../shared/data";
 
 export default function GameArea({ onKeyDown }) {
-  const [lettersToReg, setLetterToReg] = useState(lettersList);
-  const [lettersArray, setLettersArray] = useRecoilState(gussedLetters);
+  const [wordleMatrix, setWordleMatrix] = useRecoilState(modifyWordleMatrix);
 
   const getRandomWord = () => {
     const options = {
@@ -39,13 +38,12 @@ export default function GameArea({ onKeyDown }) {
 
   return (
     <Hotkeys
-      keyName={lettersToReg}
+      keyName={lettersList}
       onKeyDown={(e) => onKeyDown(e)}
-      // onKeyUp={onKeyUp}
     >
       <div className="h-full flex flex-col justify-center items-center basis-3/4 border-y border-y-slate-900">
-        {lettersArray.map((word, i) => (
-          <Word key={i} wordIndex={i} word={word} />
+        {wordleMatrix.map((word, i) => (
+          <Word key={i} word={word} />
         ))}
       </div>
     </Hotkeys>

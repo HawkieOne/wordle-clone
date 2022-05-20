@@ -1,16 +1,11 @@
 import { atom, selector } from "recoil";
-import { createArray, createLetterArr, modifyArray, reducer } from "../shared/common";
+import {
+  createArrayABC,
+  createMatrix,
+  modifyMatrix,
+  reducer,
+} from "../shared/common";
 import { lettersList } from "../shared/data";
-
-export const currentLetter = atom({
-  key: "currentLetter",
-  default: null,
-});
-
-export const currentWordIndex = atom({
-  key: "currentWordIndex",
-  default: 0,
-});
 
 export const wordIndex = selector({
   key: "wordIndex",
@@ -23,8 +18,8 @@ export const wordIndex = selector({
   },
 });
 
-export const currentLetterIndex = atom({
-  key: "currentLetterIndex",
+export const currentWordIndex = atom({
+  key: "currentWordIndex",
   default: 0,
 });
 
@@ -39,55 +34,39 @@ export const letterIndex = selector({
   },
 });
 
-export const letters = atom({
-  key: "letters",
-  default: createArray(),
+export const currentLetterIndex = atom({
+  key: "currentLetterIndex",
+  default: 0,
 });
 
-export const gussedLetters = selector({
-  key: "guessedLetters",
+export const wordleMatrix = atom({
+  key: "wordleMatrix",
+  default: createMatrix(),
+});
+
+export const modifyWordleMatrix = selector({
+  key: "lettersMatrix",
   get: ({ get }) => {
-    return get(letters);
+    return get(wordleMatrix);
   },
   set: ({ get, set }, action) => {
-    set(letters, (state) =>
-      modifyArray(
+    set(wordleMatrix, (state) =>
+      modifyMatrix(
         state,
         get(currentWordIndex),
         get(currentLetterIndex),
-        get(currentLetter),
         action
       )
     );
   },
 });
 
-export const currentBgColor = atom({
-  key: "bgcolor",
-  default: "bg-slate-500",
+export const keyboardLetters = atom({
+  key: "keyboardLetters",
+  default: createArrayABC(lettersList),
 });
 
-export const colorLetters = selector({
-  key: "colorLetters",
-  get: ({ get }) => {
-    return get(letters);
-  },
-  set: ({ get, set }, index) => {
-    // console.log(get(currentBgColor));
-    set(letters, (state) =>
-      modifyArray(
-        state,
-        get(currentWordIndex),
-        index,
-        "",
-        "color",
-        get(currentBgColor)
-      )
-    );
-  },
-});
-
-export const lettersLeft = atom({
-  key: "lettersLeft",
-  default: createLetterArr(lettersList),
+export const isPopupOpen = atom({
+  key: "isPopupOpen",
+  default: false,
 });

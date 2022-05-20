@@ -1,8 +1,7 @@
 import React from "react";
 import Letter from "./Letter";
 
-export default function Word({ currentWordIndex, word }) {
-
+export default function Word({ word }) {
   return (
     <div className="flex">
       {word.map((letter, i) => (

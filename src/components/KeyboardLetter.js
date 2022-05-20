@@ -1,5 +1,5 @@
 import { BackspaceIcon } from "@heroicons/react/solid";
-import React, { useState } from "react";
+import React from "react";
 import { useOnKeyDown } from "../shared/hooks";
 
 export default function KeyboardLetter({ letter }) {

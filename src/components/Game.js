@@ -1,22 +1,28 @@
 import React from "react";
-import "react-toastify/dist/ReactToastify.css";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 
-import { gussedLetters, lettersLeft } from "../atoms/atoms";
+import {
+  isPopupOpen,
+  keyboardLetters,
+  modifyWordleMatrix,
+} from "../atoms/atoms";
 import { wordsApi } from "../api/wordsApi";
-import { createLetterArr } from "../shared/common";
+import { createArrayABC } from "../shared/common";
 import { lettersList } from "../shared/data";
 import Header from "./Header";
 import Keyboard from "./Keyboard";
 import GameArea from "./GameArea";
 import { useOnKeyDown } from "../shared/hooks";
-import { ToastContainer } from "react-toastify";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
+import StatisticsPopup from "./StatisticsPopup";
 
 export default function Game() {
-  const [lettersLeft2, setLettersLeft] = useRecoilState(lettersLeft);
+  const [colorKeyboard, setColorKeyboard] = useRecoilState(keyboardLetters);
 
-  const [letter2, onLetterPressed] = useOnKeyDown();
-  const [lettersArray, setLettersArray] = useRecoilState(gussedLetters);
+  const [letter, onLetterPressed] = useOnKeyDown();
+  const setWordleMatrix = useSetRecoilState(modifyWordleMatrix);
+  const isOpen = useRecoilValue(isPopupOpen);
 
   return (
     <div className="h-full bg-slate-600 flex flex-col">
@@ -24,10 +30,13 @@ export default function Game() {
       <GameArea onKeyDown={onLetterPressed} />
       <Keyboard
         onKeyDown={onLetterPressed}
-        lettersLeft={lettersLeft2}
-        setLettersLeft={setLettersLeft}
+        keyboardLetters={colorKeyboard}
+        setKeyboardLetters={setColorKeyboard}
       />
-      <ToastContainer
+      <Popup open={isOpen} position="right center">
+        <StatisticsPopup />
+      </Popup>
+      {/* <ToastContainer
         position="bottom-center"
         autoClose={1000}
         hideProgressBar
@@ -37,11 +46,12 @@ export default function Game() {
         pauseOnFocusLoss={false}
         draggable={false}
         pauseOnHover={false}
-        onClick={() => {
-          setLettersArray("new");
-          setLettersLeft(createLetterArr(lettersList));
+        onClick={() => {          
+          setWordleMatrix("new");
+          // Resets keyboard colors
+          setColorKeyboard(createArrayABC(lettersList));
         }}
-      />
+      /> */}
     </div>
   );
 }

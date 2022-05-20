@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Game from "./components/Game";
-import { RecoilRoot, useRecoilState, useSetRecoilState } from "recoil";
-
-const correctWord = "HELLO";
+import { RecoilRoot } from "recoil";
 
 function App() {
 

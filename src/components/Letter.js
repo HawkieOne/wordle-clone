@@ -1,11 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { letterIndex, letters, wordIndex } from "../atoms/atoms";
+import React from "react";
 
 export default function Letter({ letter, bgcolor }) {
-  // const lettersArray = useRecoilValue(letters);
-  // var activeWordIndex = useRecoilValue(wordIndex);
-  // var [activeLetterIndex, setActiveLetterIndex] = useRecoilState(letterIndex);
   return (
     <div className="m-2">
       {letter === '' ? (
