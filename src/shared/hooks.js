@@ -1,26 +1,23 @@
 import { toast } from "react-toastify";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import {
-  colorLetters,
-  currentBgColor,
-  currentLetter,
-  gussedLetters,
+  lettersMatrix,
   letterIndex,
-  lettersLeft,
+  keyboardLetters,
   wordIndex,
+  modifyWordleMatrix,
+  isPopupOpen,
 } from "../atoms/atoms";
-import { GREEN, LIGHTGREY, YELLOW } from "./data";
+import { DARKGREY, GREEN, YELLOW } from "./data";
 
 const correctWord = "HELLO";
 
 export const useOnKeyDown = (letter) => {
-  const setLetter = useSetRecoilState(currentLetter);
-  const [lettersLeft2, setLettersLeft] = useRecoilState(lettersLeft);
+  const [lettersLeft2, setLettersLeft] = useRecoilState(keyboardLetters);
   const [activeWordIndex, setActiveWordIndex] = useRecoilState(wordIndex);
   const [activeLetterIndex, setActiveLetterIndex] = useRecoilState(letterIndex);
-  const [lettersArray, setLettersArray] = useRecoilState(gussedLetters);
-  const [colorsArray, setColorsArray] = useRecoilState(colorLetters);
-  const setCurrentBgColor = useSetRecoilState(currentBgColor);
+  const [lettersArray, setLettersArray] = useRecoilState(modifyWordleMatrix);
+  const setIsOpen = useSetRecoilState(isPopupOpen);
 
   const onLetterPressed = (letter) => {
     switch (letter) {
@@ -38,7 +35,7 @@ export const useOnKeyDown = (letter) => {
 
   const onBackspacePressed = (letter) => {
     setActiveLetterIndex("decrease");
-    setLettersArray("delete");
+    setLettersArray({action: "delete", value: 0});
   };
 
   const onEnterPressed = (letter) => {
@@ -61,17 +58,16 @@ export const useOnKeyDown = (letter) => {
         updateColors(YELLOW, i);
       } else {
         lettersLeftCpy = colorLetter(letter, "wrong", lettersLeftCpy);
-        updateColors(LIGHTGREY, i);
+        updateColors(DARKGREY, i);
       }
     }
     setActiveWordIndex("increase");
     setActiveLetterIndex("zero");
     setLettersLeft(lettersLeftCpy);
 
+    // If correct guess
     if (correctLetterCount === 5) {
-      toast("Correct guess\nPress here to play again", {
-        autoClose: false,
-      });
+      setIsOpen(true);
       setActiveWordIndex("zero");
       setActiveLetterIndex("zero");
       return;
@@ -79,14 +75,12 @@ export const useOnKeyDown = (letter) => {
   };
 
   const onOtherLetterPressed = (letter) => {
-    setLetter(letter);
-    setLettersArray("add");
+    setLettersArray({action: "add", value: letter});
     setActiveLetterIndex("increase");
   };
 
-  const updateColors = (color, index) => {
-    setCurrentBgColor(color);
-    setColorsArray(index);
+  const updateColors = (color, i) => {
+    setLettersArray({action: "color", value: color, index: i});
   };
   
   return [letter, onLetterPressed];
@@ -99,19 +93,19 @@ const colorLetter = (letter, action, arr) => {
       if (action === "correct") {
         newItem = {
           letter: item.letter,
-          color: "bg-emerald-700",
+          color: GREEN,
         };
       } else if (action === "wrongPos") {
         if (item.color !== "bg-green-500") {
           newItem = {
             letter: item.letter,
-            color: "bg-amber-400",
+            color: YELLOW,
           };
         }
       } else if (action === "wrong") {
         newItem = {
           letter: item.letter,
-          color: "bg-slate-700",
+          color: DARKGREY,
         };
       }
     }
