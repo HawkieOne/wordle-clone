@@ -26,3 +26,43 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.popup-content {
+  margin: auto;
+  background: red;
+  border-radius: 15px;
+  width: 50%;
+  padding: 5px;
+}
+
+.wobble {
+  /* border: 0.5px #ef4444 solid; */
+  animation-name: Shake;
+  animation-duration: 1s;
+}
+
+@keyframes Shake {
+  10%,
+  90% {
+    transform: translateX(5px);
+  }
+  20%,
+  80% {
+    transform: translateX(-5px);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translateX(5px);
+  }
+  40%,
+  60% {
+    transform: translateX(-5px);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .popup-content {
+    width: 80% !important;
+  }
+}
