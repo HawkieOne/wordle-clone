@@ -1,6 +1,8 @@
+import axios from "axios";
 import { LIGHTGREY } from "./data";
+import wordsArray from "an-array-of-english-words";
 
-// * Creates the initial array for rendering the game area 
+// * Creates the initial array for rendering the game area
 const createMatrix = () => {
   const matrix = new Array(5)
     .fill(0)
@@ -28,12 +30,12 @@ const reducer = (value, action) => {
 };
 
 // * Use this to change the values of the matrix
-// ! Can also be used to change the color of the matrix (Used for showing letter status) 
+// ! Can also be used to change the color of the matrix (Used for showing letter status)
 const modifyMatrix = (arr, y, x, action) => {
   if (x === 5) {
     x = 4;
   }
-  console.log(action);
+  // console.log(action);
   var newArr = arr;
   switch (action.action) {
     case "add":
@@ -56,7 +58,7 @@ const modifyMatrix = (arr, y, x, action) => {
       word = [...arr[y]];
       obj = { ...word[action.index] };
       obj.color = action.value;
-      console.log(obj);
+      // console.log(obj);
       word = replaceItemAtIndex([...word], action.index, obj);
       newArr = replaceItemAtIndex([...arr], y, word);
       break;
@@ -101,6 +103,12 @@ const createArrayABC = (arr) => {
   });
 };
 
+const generateRandomWord = () => {
+  const arr = wordsArray.filter((d) => d.length === 5);
+  const randomWord = arr[Math.floor(Math.random() * arr.length)];
+  return randomWord.toUpperCase();;
+};
+
 export {
   createMatrix,
   reducer,
@@ -110,4 +118,5 @@ export {
   deleteItemAtIndex,
   joinLettersToWord,
   createArrayABC,
+  generateRandomWord
 };
