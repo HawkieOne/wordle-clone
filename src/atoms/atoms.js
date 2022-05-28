@@ -2,6 +2,7 @@ import { atom, selector } from "recoil";
 import {
   createArrayABC,
   createMatrix,
+  getRandomWord,
   modifyMatrix,
   reducer,
 } from "../shared/common";
@@ -70,3 +71,33 @@ export const isPopupOpen = atom({
   key: "isPopupOpen",
   default: false,
 });
+
+export const amountOfGuesses = atom({
+  key:"amountofGuesses",
+  default: 0
+})
+
+export const wordOfTheGame = atom({
+  key: "wordOfTheGame",
+  default: "HELLO",
+})
+
+export const doesWordExist = atom({
+  key: "doesWordExist",
+  default: true,
+})
+
+export const animateMissingLetter = atom({
+  key: "animateMissingLetter",
+  default: false,
+})
+
+export const hasWonGame = atom({
+  key: "hasWonGame",
+  default: false,
+})
+
+export const darkMode = atom({
+  key: "darkMode",
+  default: "Dark",
+})
