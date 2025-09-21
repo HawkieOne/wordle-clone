@@ -14,7 +14,7 @@ import { useLocalStorage } from "../shared/hooks";
 
 export default function StatisticsPopup({ showWord, close }) {
   const setWordleMatrix = useSetRecoilState(modifyWordleMatrix);
-  const setColorKeyboard = useRecoilState(keyboardLetters[1]);
+  const setColorKeyboard = useRecoilState(keyboardLetters)[1];
   const setIsOpen = useSetRecoilState(isPopupOpen);
   const amountOfGuessesValue = useRecoilValue(amountOfGuesses);
 

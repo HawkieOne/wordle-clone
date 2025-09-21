@@ -20,7 +20,7 @@ export default function Game() {
   const [colorKeyboard, setColorKeyboard] = useRecoilState(keyboardLetters);
   const onLetterPressed = useOnKeyDown()[1];
   const isOpen = useRecoilValue(isPopupOpen);
-  const [setWord] = useRecoilState(wordOfTheGame)[1];
+  const setWord = useRecoilState(wordOfTheGame)[1];
   const isDarkmode = useRecoilValue(darkMode);
 
   useEffect(() => {
