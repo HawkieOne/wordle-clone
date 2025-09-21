@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import { useState } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import {
   letterIndex,
   keyboardLetters,
@@ -13,7 +13,7 @@ import {
   hasWonGame,
 } from "../atoms/atoms";
 import { DARKGREY, GREEN, YELLOW } from "./data";
-import { getRandomWord, joinLettersToWord } from "./common";
+import { joinLettersToWord } from "./common";
 import wordsArray from 'an-array-of-english-words';
 
 export const useOnKeyDown = (letter, word) => {
@@ -28,8 +28,8 @@ export const useOnKeyDown = (letter, word) => {
 
   const increasesNumberOfGuesses = useSetRecoilState(amountOfGuesses);
 
-  const [daysPlayed, setDaysPlayed] = useLocalStorage("daysPlayed", 0);
-  const [daysWon, setDaysWon] = useLocalStorage("daysWon", 0);
+  const setDaysPlayed = useLocalStorage("daysPlayed", 0)[1];
+  const setDaysWon = useLocalStorage("daysWon", 0)[1];
   const [maxStreak, setMaxStreak] = useLocalStorage("maxStreak", 0);
   const [currentStreak, setCurrentStreak] = useLocalStorage("currentStreak", 0);
 
@@ -67,7 +67,7 @@ export const useOnKeyDown = (letter, word) => {
 
     // Checks if the word exists
     let isAWord = false;
-    wordsArray.map((word, index) => {
+    wordsArray.forEach((word) => {
       const writtenWord = joinLettersToWord(lettersArray[activeWordIndex]).toLowerCase();
       if (word === writtenWord) {
         isAWord = true;

@@ -6,7 +6,7 @@ import { useOnKeyDown } from "../shared/hooks";
 
 export default function KeyboardLetter({ letter }) {
 
-  const [letter2, onKeyDown] = useOnKeyDown(letter);
+  const onKeyDown = useOnKeyDown(letter)[1];
   const word = useRecoilValue(wordOfTheGame);
 
   const onClick = () => {

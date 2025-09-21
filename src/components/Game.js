@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 
 import {
   darkMode,
-  hasWonGame,
   isPopupOpen,
   keyboardLetters,
   wordOfTheGame,
@@ -15,13 +14,13 @@ import { useOnKeyDown } from "../shared/hooks";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import StatisticsPopup from "./StatisticsPopup";
-import { generateRandomWord, getRandomWord } from "../shared/common";
+import { generateRandomWord } from "../shared/common";
 
 export default function Game() {
   const [colorKeyboard, setColorKeyboard] = useRecoilState(keyboardLetters);
-  const [letter, onLetterPressed] = useOnKeyDown();
+  const onLetterPressed = useOnKeyDown()[1];
   const isOpen = useRecoilValue(isPopupOpen);
-  const [word, setWord] = useRecoilState(wordOfTheGame);
+  const [setWord] = useRecoilState(wordOfTheGame)[1];
   const isDarkmode = useRecoilValue(darkMode);
 
   useEffect(() => {

@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Hotkeys from "react-hot-keys";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import axios from "axios";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 import { hasWonGame, isPopupOpen, keyboardLetters, modifyWordleMatrix, wordOfTheGame } from "../atoms/atoms";
 import Word from "./Word";

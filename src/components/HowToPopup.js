@@ -1,6 +1,5 @@
 import React from "react";
 import { GREEN, LIGHTGREY, YELLOW } from "../shared/data";
-import Letter from "./Letter";
 import LetterPopup from "./LetterPopup";
 
 export default function HowToPopup({ close }) {

@@ -1,5 +1,5 @@
 import React from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { animateMissingLetter, currentLetterIndex, currentWordIndex, doesWordExist } from "../atoms/atoms";
 
 export default function Letter({ letter, bgcolor, index }) {
@@ -7,7 +7,6 @@ export default function Letter({ letter, bgcolor, index }) {
   const wordExist = useRecoilValue(doesWordExist)
   const aniamteMissing = useRecoilValue(animateMissingLetter) 
   const currentRowIndex = useRecoilValue(currentWordIndex); 
-  const currenColumnIndex = useRecoilValue(currentLetterIndex); 
 
   let bounceLetter = false;
   if (index === currentRowIndex && !wordExist) {

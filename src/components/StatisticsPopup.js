@@ -4,7 +4,6 @@ import {
   amountOfGuesses,
   hasWonGame,
   isPopupOpen,
-  isPopupStatsOpen,
   keyboardLetters,
   modifyWordleMatrix,
   wordOfTheGame,
@@ -15,16 +14,16 @@ import { useLocalStorage } from "../shared/hooks";
 
 export default function StatisticsPopup({ showWord, close }) {
   const setWordleMatrix = useSetRecoilState(modifyWordleMatrix);
-  const [colorKeyboard, setColorKeyboard] = useRecoilState(keyboardLetters);
+  const setColorKeyboard = useRecoilState(keyboardLetters[1]);
   const setIsOpen = useSetRecoilState(isPopupOpen);
   const amountOfGuessesValue = useRecoilValue(amountOfGuesses);
 
-  const [daysPlayed, setDaysPlayed] = useLocalStorage("daysPlayed", 0);
-  const [daysWon, setDaysWon] = useLocalStorage("daysWon", 0);
-  const [maxStreak, setMaxStreak] = useLocalStorage("maxStreak", 0);
-  const [currentStreak, setCurrentStreak] = useLocalStorage("currentStreak", 0);
+  const [daysPlayed] = useLocalStorage("daysPlayed", 0);
+  const [daysWon] = useLocalStorage("daysWon", 0);
+  const [maxStreak] = useLocalStorage("maxStreak", 0);
+  const [currentStreak] = useLocalStorage("currentStreak", 0);
   const [word, setWord] = useRecoilState(wordOfTheGame);
-  const [isVictory, setIsVictory] = useRecoilState(hasWonGame);
+  const setIsVictory = useRecoilState(hasWonGame)[1];
 
   const startNewGame = () => {
     setWordleMatrix({ action: "new", value: 0 });

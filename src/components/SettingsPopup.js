@@ -10,10 +10,10 @@ import ConfirmPopup from "./ConfirmPopup";
 export default function SettingsPopup({ close }) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isDarkMode, setIsDarkmode] = useRecoilState(darkMode);
-  const [daysPlayed, setDaysPlayed] = useLocalStorage("daysPlayed", 0);
-  const [daysWon, setDaysWon] = useLocalStorage("daysWon", 0);
-  const [maxStreak, setMaxStreak] = useLocalStorage("maxStreak", 0);
-  const [currentStreak, setCurrentStreak] = useLocalStorage("currentStreak", 0);
+  const setDaysPlayed = useLocalStorage("daysPlayed", 0)[1];
+  const setDaysWon = useLocalStorage("daysWon", 0)[1];
+  const setMaxStreak = useLocalStorage("maxStreak", 0)[1];
+  const setCurrentStreak = useLocalStorage("currentStreak", 0)[1];
   const setNumberOfGuesses = useSetRecoilState(amountOfGuesses);
 
   const changeMode = () => {

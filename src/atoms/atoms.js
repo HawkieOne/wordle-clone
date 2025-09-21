@@ -2,7 +2,6 @@ import { atom, selector } from "recoil";
 import {
   createArrayABC,
   createMatrix,
-  getRandomWord,
   modifyMatrix,
   reducer,
 } from "../shared/common";

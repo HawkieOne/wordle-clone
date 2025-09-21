@@ -4,7 +4,6 @@ import {
   ChartBarIcon,
   CogIcon,
 } from "@heroicons/react/solid";
-import { useRecoilState, useRecoilValue } from "recoil";
 import Popup from "reactjs-popup";
 import StatisticsPopup from "./StatisticsPopup";
 import HowToPopup from "./HowToPopup";

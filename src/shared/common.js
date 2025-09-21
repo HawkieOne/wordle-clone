@@ -1,4 +1,3 @@
-import axios from "axios";
 import { LIGHTGREY } from "./data";
 import wordsArray from "an-array-of-english-words";
 
